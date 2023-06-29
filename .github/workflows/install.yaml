@@ -28,10 +28,12 @@ jobs:
       - uses: conda-incubator/setup-miniconda@v2
         with:
           miniconda-version: latest
-          environment-file: environment.yml
-      - name: Save current environment with pinned dependencies
+      - name: Install from original env file
         run: |
-          conda env export --no-builds > environment.yml
+          conda env create -f environment.yml
+      - name: Save resolved environment with pinned dependencies
+        run: |
+          conda env export -n "$ENVIRONMENT_NAME" --no-builds > environment.yml
       - uses: actions/upload-artifact@v3
         with:
           path: environment.yml
