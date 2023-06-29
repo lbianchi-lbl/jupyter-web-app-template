@@ -34,6 +34,7 @@ jobs:
       - name: Save resolved environment with pinned dependencies
         run: |
           conda env export -n "$ENVIRONMENT_NAME" --no-builds > environment.yml
+          cat environment.yml
       - uses: actions/upload-artifact@v3
         with:
           path: environment.yml
