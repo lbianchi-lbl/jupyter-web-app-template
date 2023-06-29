@@ -1,0 +1,37 @@
+on:
+  push:
+
+env:
+  ENVIRONMENT_NAME: jupyter-web-application
+
+defaults:
+  run:
+    shell: bash -l {0}
+
+jobs:
+  conda:
+    name: conda env (${{ matrix.runner }})
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        runner:
+          - windows-2022
+          - windows-2019
+          - ubuntu-22.04
+          - ubuntu-20.04
+          - macos-13
+          - macos-12
+          - macos-11
+    steps:
+      - uses: actions/checkout@v3
+      - uses: conda-incubator/setup-miniconda@v2
+        with:
+          environment-file: environment.yml
+      - name: Save current environment with pinned dependencies
+        run: |
+          conda env export --no-builds > environment.yml
+      - uses: actions/upload-artifact@v3
+        with:
+          path: environment.yml
+          name: environment-${{ matrix.runner }}
