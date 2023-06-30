@@ -39,6 +39,10 @@ jobs:
         if: startsWith(matrix.runner, 'windows-')
         run:
           echo 'ENV_FILE=environment-windows.yml' >> "$GITHUB_ENV"
+      - name: Set env file for macOS
+        if: startsWith(matrix.runner, 'macos-')
+        run:
+          echo 'ENV_FILE=environment-macos.yml' >> "$GITHUB_ENV"
       - name: Install from original env file
         run: |
           conda env create -f "$ENV_FILE"
