@@ -48,7 +48,7 @@ jobs:
           conda env create -f "$ENV_FILE"
       - name: Save resolved environment with pinned dependencies
         run: |
-          conda env export -n "$ENV_NAME" --no-builds > "$ENV_FILE"
+          conda env export -n "$ENV_NAME" > "$ENV_FILE"
           cat "$ENV_FILE"
       - uses: actions/upload-artifact@v3
         with:
