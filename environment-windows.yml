@@ -2,6 +2,7 @@ name: jupyter-web-application
 channels:
   - fastai
   - conda-forge
+  - nodefaults
 dependencies:
   - aiofiles=22.1.0
   - aiosqlite=0.19.0
