@@ -35,6 +35,10 @@ jobs:
         if: startsWith(matrix.runner, 'ubuntu-')
         run:
           echo 'ENV_FILE=environment-ubuntu.yml' >> "$GITHUB_ENV"
+      - name: Set env file for Windows
+        if: startsWith(matrix.runner, 'windows-')
+        run:
+          echo 'ENV_FILE=environment-windows.yml' >> "$GITHUB_ENV"
       - name: Install from original env file
         run: |
           conda env create -f "$ENV_FILE"
