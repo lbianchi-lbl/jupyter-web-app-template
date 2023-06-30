@@ -34,7 +34,7 @@ jobs:
       - name: Set env file for Linux
         if: startsWith(matrix.runner, 'ubuntu-')
         run:
-          echo 'ENV_FILE="environment-ubuntu.yml"' >> "$GITHUB_ENV"
+          echo 'ENV_FILE=environment-ubuntu.yml' >> "$GITHUB_ENV"
       - name: Install from original env file
         run: |
           conda env create -f "$ENV_FILE"
