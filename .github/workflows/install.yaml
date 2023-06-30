@@ -1,8 +1,11 @@
+name: Install
+
 on:
   push:
 
 env:
-  ENVIRONMENT_NAME: jupyter-web-application
+  ENV_NAME: jupyter-web-application
+  ENV_FILE: environment.yml
 
 defaults:
   run:
@@ -28,14 +31,18 @@ jobs:
       - uses: conda-incubator/setup-miniconda@v2
         with:
           miniconda-version: latest
+      - name: Set env file for Linux
+        if: startsWith(matrix.runner, 'ubuntu-')
+        run:
+          echo 'ENV_FILE="environment-ubuntu.yml"' >> "$GITHUB_ENV"
       - name: Install from original env file
         run: |
-          conda env create -f environment.yml
+          conda env create -f "$ENV_FILE"
       - name: Save resolved environment with pinned dependencies
         run: |
-          conda env export -n "$ENVIRONMENT_NAME" --no-builds > environment.yml
+          conda env export -n "$ENV_NAME" --no-builds > "$ENV_FILE"
           cat environment.yml
       - uses: actions/upload-artifact@v3
         with:
-          path: environment.yml
+          path: ${{ env.ENV_FILE }}
           name: environment-${{ matrix.runner }}
